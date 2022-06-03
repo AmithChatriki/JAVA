@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class Add2numbersusingMethods 
+{
+	public static void main(String[] args)
+	{
+		int a,b,c;
+		Scanner SC = new Scanner(System.in);
+		a = SC.nextInt();
+		b = SC.nextInt();
+		SC.close();
+		c = addition(a,b);
+		System.out.println(c);
+	}
+	private static int addition(int x,int y) 
+	{
+		return x+y;
+	}
+}
