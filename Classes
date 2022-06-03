@@ -1,0 +1,17 @@
+public class Dog {
+	public static void main(String[] args) {
+		Testdog d = new Testdog();
+		d.age = 18;
+		d.height = 10;
+		d.eat();
+		System.out.println(d.age);
+		System.out.println(d.height);
+	}	
+}
+class Testdog {
+	int age,height;
+	void eat()
+	{
+		System.out.println("All Dog Eat");
+	}
+}
