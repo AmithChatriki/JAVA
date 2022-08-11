@@ -1,0 +1,44 @@
+class NewThread extends Thread 
+{
+	NewThread(String n) 
+	{
+		this.setName(n);
+		System.out.println("Child thread: " + this);
+		start(); // Start the thread
+	}
+	@Override
+	public void run() 
+	{
+		try 
+		{
+			for(int i = 3; i > 0; i--) 
+			{
+				System.out.println( getName() +" Thread: " + i);
+				Thread.sleep(500);
+			}
+		}
+		catch (InterruptedException e) 
+		{ 
+			System.out.println("Child interrupted."); 
+		}
+		System.out.println("Exiting "+getName()+" child thread.");
+	} 
+}
+class join
+{
+	public static void main(String args[]) 
+	{
+		NewThread nt = new NewThread("First");
+		NewThread nt1 = new NewThread("Second");
+		try 
+		{
+			nt.join();
+			nt1.join();
+		}
+		catch (InterruptedException e) 
+		{
+			System.out.println("Main thread interrupted.");
+		}
+		System.out.println("Main thread exiting.");
+	} 
+}
