@@ -1,0 +1,51 @@
+class clicker implements Runnable 
+{
+	long click = 0;
+	Thread t;
+	private volatile boolean running = true;
+	public clicker(int p) 
+	{
+		t = new Thread(this);
+		t.setPriority(p);
+	}
+	public void run() 
+	{
+		while (running)
+		click++;
+	}
+	public void stop() { running = false; }
+	public void start() { t.start(); }
+	}
+class threadpriority
+{
+	public static void main(String args[]) 
+	{
+		(Thread.currentThread()).setPriority(Thread.MAX_PRIORITY);
+		clicker hi = new clicker(Thread.NORM_PRIORITY + 4);
+		clicker lo = new clicker(Thread.NORM_PRIORITY - 2);
+		hi.start();
+		lo.start();
+		try 
+		{ 
+			Thread.sleep(1); 
+		}
+		catch (InterruptedException e)
+		{ 
+			System.out.println("Main thread interrupted."); 
+		}
+		// Wait for child threads to terminate.
+		try 
+		{
+			hi.t.join();
+			lo.t.join();
+		}
+		catch (InterruptedException e)
+		{ 
+			System.out.println("InterruptedException caught"); 
+		}
+		lo.stop();
+		hi.stop();
+		System.out.println("Low-priority thread: " + lo.click);
+		System.out.println("High-priority thread: " + hi.click);
+	}
+}
