@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+public class knapsackDPP 
+{
+	private int[] weight,profit;
+	private int m,n;
+	knapsackDPP()
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter the number of items = ");
+		n = sc.nextInt();
+		weight = new int[n];
+		profit = new int[n];
+		System.out.println("Enter the weight and profit of each item = ");
+		for(int i=0;i<n;i++)
+		{
+			weight[i] = sc.nextInt();
+			profit[i] = sc.nextInt();
+		}
+		System.out.print("Enter the Knapsack Capacity = ");
+		m = sc.nextInt();
+	}
+	void fill()
+	{
+		int [][]k = new int[n+1][m+1];
+		for(int i=0;i<=n;i++)
+			for(int j=0;j<=m;j++)
+			{
+				if(i==0 || j==0)
+					k[i][j]=0;
+				else if(j < weight[i-1])
+					k[i][j]=k[i-1][j];
+				else
+					k[i][j]=Math.max(k[i-1][j],profit[i-1]+k[i-1][j-weight[i-1]]);
+			}
+		System.out.println("Maximum profit = "+k[n][m]);
+		System.out.print("Items Considered = ");
+		int i=n,j=m;
+		while(i>0 && j>0) 
+		{
+			if(k[i][j] != k[i-1][j])
+			{
+				System.out.print(i+" ");
+				j=j-weight[i-1];
+			}
+			i=i-1;
+		}
+		System.out.println();
+	}
+	public static void main(String[] args)
+	{
+		knapsackDPP a = new knapsackDPP();
+		a.fill();
+	}
+}
