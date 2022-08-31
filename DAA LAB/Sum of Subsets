@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+public class Subset 
+{
+	static int set[] = new int[10];
+	static int solvector[] =  new int[10];
+	static int target,count=0;
+	
+	public static void main(String[] args)
+	{
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Enter the number of elements = ");
+		int n = sc.nextInt();
+		
+		System.out.print("Enter the elements in Ascending Order = ");
+		for(int i=0;i<n;i++)
+			set[i] = sc.nextInt();
+		
+		System.out.print("Enter the Target = ");
+		target = sc.nextInt();
+		int tot_sum = 0;
+		
+		for(int i=0;i<n;i++)
+			tot_sum += set[i];
+		
+		if(target>tot_sum)
+		{
+			System.out.println("No Possible Subsets");
+			System.exit(0);
+		}
+		System.out.println("The Solutions are = ");
+		subset(0,0,tot_sum);
+	}
+	static void subset(int sumsofar, int index, int result) 
+	{
+		int i = 0;
+ 		solvector[index] = 1;
+		if(sumsofar + set[index] == target)
+		{
+			System.out.print("(");
+			for (i=0;i<=index;i++) 
+			{	
+				if(solvector[i]==1)
+					System.out.print(" " + set[i]);
+ 			}
+			System.out.println(" )");
+ 		}
+ 		else if ((sumsofar + set[index] + set[index + 1]) <= target) 
+		{
+			subset(sumsofar + set[index], index + 1, result - set[index]);
+		}
+		if((sumsofar + result - set[index]) >= target && (sumsofar + set[index + 1]) <= target) 
+		{
+			solvector[index] = 0;
+			subset(sumsofar, index + 1, result - set[index]);
+		}
+	}
+}
