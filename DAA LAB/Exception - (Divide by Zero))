@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+class exception 
+{
+	public static void main(String[] args)
+	{
+		int a,b;
+		float res;
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Input Dividend (a) = ");
+		a = sc.nextInt();
+		System.out.print("Input Divisor (b) = ");
+		b = sc.nextInt();
+		sc.close();
+		try
+		{
+			res = a/b;
+			System.out.println("Quotient is = " + res);
+		}
+		catch(ArithmeticException e)
+		{
+			System.out.println("Divide by zero error " + e);
+		}
+	}
+}
