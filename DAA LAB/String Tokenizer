@@ -1,0 +1,37 @@
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
+class Stringtokenizer
+{
+	private String name, DOB;
+	public void input() 
+	{
+		Scanner s = new Scanner(System.in);
+		System.out.println("Enter the name : ");
+		name = s.nextLine();
+		System.out.println("Enter the Date of birth in format dd/mm/yyyy : ");
+		DOB = s.nextLine();
+		s.close();
+	}
+	public void display()
+	{
+		System.out.print("Name and ");
+		StringTokenizer st = new StringTokenizer(DOB, "/");
+		System.out.print("Date of birth is:"+ " < " + name + ", ");
+		int n = st.countTokens();
+		while (st.hasMoreTokens())
+		{
+			if(n>1)
+				System.out.print(st.nextToken("/") + ", ");
+			else
+				System.out.println(st.nextToken("/") + " >");
+			n--;
+		}
+	}
+	public static void main(String[] args) 
+	{
+		Stringtokenizer st = new Stringtokenizer();
+		st.input();
+		st.display();
+	}
+}
