@@ -30,13 +30,13 @@ public class quicksort {
 		stop = System.nanoTime();
 		System.out.println("Time taken to sort "+a.length+" elements "+(stop-start));
    }
-   static void quicksort(int a[],int low,int high)
+  static void quicksort(int a[],int low,int high)
    {
-	   if(low<=high) {
-	   
-	   int j=partation(a,low,high);
-	   quicksort(a,low,j-1);
-	   quicksort(a,j+1,high);
+	   if(low<=high) 
+	   {
+			int j=partation(a,low,high);
+			quicksort(a,low,j-1);
+			quicksort(a,j+1,high);
 	   }
    }
    static int partation(int a[],int low,int high)
