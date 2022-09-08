@@ -1,70 +1,84 @@
-import java.io.*;
-import java.util.*;
-import java.lang.*;
-public class mergesort
+import java.util.Scanner;
+import java.util.Random;
+class mergesort
 {
-	public static void merge(int []arr,int l,int m,int r)
+	public static void main(String[] args) 
 	{
-		int n1 = m-l+1;
-		int n2 = r-m;
-		int L[] = new int[n1*2];
-		int R[] = new int[n2*2];
-		for(int i=0;i<n1;i++)
-			L[i] = arr[l+i];
-		for(int j=0;j<n2;j++)
-			R[j] = arr[m+1+j];
-		int i=0,j=0,k=l;
-		while(i<n1 && j<n2)
-		{
-			if(L[i]<=R[i])
-				arr[k++]=L[i++];
-			else
-				arr[k++]=R[j++];
-		}
-		while(i<n1)
-			arr[k++]=L[i++];
-		while(j<n2)
-			arr[k++]=R[j++];
-	}
-	static void sort(int []arr,int l,int r)
-	{
-		if(l<r)
-		{
-			int m = l+(r-l)/2;
-			sort(arr,l,m);
-			sort(arr,m+1,r);
-			merge(arr,l,m,r);
-		}
-	}
-	public static void main(String []args)
-	{
-		Scanner sc = new Scanner(System.in);
-		Random ran = new Random();
-		System.out.print("Enter the array size = ");
-		int n = sc.nextInt();
-		int []arr = new int[n];;
-		System.out.print("1.Best Case  2.Average Case  3.Worst Case\nEnter the Choice = ");
-		int ch = sc.nextInt();
+		Scanner scan=new Scanner(System.in);
+		Random ran=new Random();
+		long start,stop;
+		System.out.print("Enter no of elements = ");
+		int n=scan.nextInt();
+		int[] a=new int[n];
+        System.out.print("\n1: Best Case  2: Average Case  3:  Worst Case \nEnter the choice = ");
+		int ch=scan.nextInt();
 		switch(ch)
 		{
-			case 1 : System.out.println("BEST CASE");
-					 for(int i=0;i<n;i++)
-					 	arr[i]=i;
-					 break;
-			case 2 : System.out.println("AVERAGE CASE");
-					 for(int i=0;i<n;i++)
-					 	arr[i]=ran.nextInt(n);
-					 break;
-			case 3 : System.out.println("WORST CASE");
-					 for(int i=0;i<n;i++)
-					 	arr[i]=n-i;
-					 break;
+			case 1: System.out.println("\nBest Case");
+					for(int i=0;i<n;i++)
+						a[i]=i;
+				break;
+		   	case 2: System.out.println("\nAverage Case");
+					for(int i=0;i<n;i++)
+						a[i]=ran.nextInt(n);
+				break;
+		   	case 3: System.out.println("\nWorst Case");
+					for(int i=0;i<n;i++)
+						a[i]=n-i;
+				break;		
+			
 		}
-		
-		long start,stop;
-		start = System.nanoTime();
-		sort(arr,0,arr.length-1);
-		stop = System.nanoTime();
-		System.out.println("Time Taken to sort "+arr.length+" elements = "+(stop-start));
+		start=System.nanoTime();
+		Mergesort(a,0,n-1);
+		stop=System.nanoTime();
+        System.out.println("Time taken to sort " +a.length+ " elements = " +(stop-start));
+    }
+	public static void Mergesort(int[] a, int low, int high)
+	{
+		int mid;
+		if(low<high)
+		{
+			mid=(low+high)/2;
+			Mergesort(a, low, mid);
+			Mergesort(a, mid+1, high);
+			Merge(a,low,mid,high);
+		}
+	}
+	public static void Merge(int[] arr,int low,int mid,int high) 
+	{
+		int k,h=low,i=low,j=mid+1;
+		int[] b=new int[arr.length];
+		while(h<=mid && j<=high)
+		{
+			if(arr[h]<=arr[j])
+			{
+				b[i]=arr[h];
+				h++;
+			}
+			else
+			{
+				b[i]=arr[j];
+				j++;
+			}
+			i++;
+		}
+		if(h>mid)
+		{
+			for(k=j;k<=high;k++)
+			{
+				b[i]=arr[k];
+				i++;
+			}
+		}
+		else
+		{
+			for(k=h;k<=mid;k++)
+			{
+				b[i]=arr[k];
+				i++;
+			}		
+		}
+		for(k=low;k<=high;k++)
+			arr[k]=b[k];
 	}
 }
