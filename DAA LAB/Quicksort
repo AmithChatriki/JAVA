@@ -1,0 +1,65 @@
+import java.util.*;
+public class quicksort {
+   public static void main(String[] args)
+   {
+	   	Scanner sc = new Scanner(System.in);
+		System.out.print("Enter the size of array = ");
+		int n = sc.nextInt();
+		int []a = new int[n];
+		Random ran = new Random();
+		System.out.print("\n1.BestCase 2.AverageCase 3.WorstCase \nEnter the choice = ");
+		int ch = sc.nextInt();
+		switch(ch)
+		{
+			case 1: System.out.println("\nBest Case");
+					for(int i=0;i<n;i++)
+						a[i]=ran.nextInt(n);
+						break;
+			case 2: System.out.println("\nAverage Case");
+				    for(int i=0;i<n;i++)
+				        a[i]=ran.nextInt(n);
+				       	break;
+			case 3: System.out.println("\nWorst Case");
+				    for(int i=0;i<n;i++)
+				    	a[i]=i;
+				        break;
+		}
+		long start,stop;
+		start = System.nanoTime();
+		quicksort(a,0,n-1);
+		stop = System.nanoTime();
+		System.out.println("Time taken to sort "+a.length+" elements "+(stop-start));
+   }
+   static void quicksort(int a[],int low,int high)
+   {
+	   if(low<=high) {
+	   
+	   int j=partation(a,low,high);
+	   quicksort(a,low,j-1);
+	   quicksort(a,j+1,high);
+	   }
+   }
+   static int partation(int a[],int low,int high)
+   {
+	   int i = low;
+	   int pivot = a[low];
+	   int j = high;
+	   while(i<j)
+	   {
+		   while(a[i] <= pivot && i<=high-1)
+			   i++;
+		   while(a[j] > pivot && j>=low)
+			   j--;
+		   if(i<j)
+		   {
+			   int temp = a[i];
+			   a[i]=a[j];
+			   a[j]=temp;
+		   }
+	   }
+	   int temp = a[low];
+	   a[low]=a[j];
+	   a[j]=temp;
+	   return j;
+   }
+}
