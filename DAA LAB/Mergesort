@@ -4,32 +4,33 @@ class mergesort
 {
 	public static void main(String[] args) 
 	{
-		Scanner scan=new Scanner(System.in);
-		Random ran=new Random();
+		Scanner sc = new Scanner(System.in);
+		Random ran = new Random();
 		long start,stop;
 		System.out.print("Enter no of elements = ");
-		int n=scan.nextInt();
-		int[] a=new int[n];
+		int n = sc.nextInt();
+		int[] a = new int[n];
         System.out.print("\n1: Best Case  2: Average Case  3:  Worst Case \nEnter the choice = ");
-		int ch=scan.nextInt();
+		int ch=sc.nextInt();
 		switch(ch)
 		{
 			case 1: System.out.println("\nBest Case");
 					for(int i=0;i<n;i++)
 						a[i]=i;
-				break;
+					break;
 		   	case 2: System.out.println("\nAverage Case");
 					for(int i=0;i<n;i++)
 						a[i]=ran.nextInt(n);
-				break;
+					break;
 		   	case 3: System.out.println("\nWorst Case");
 					for(int i=0;i<n;i++)
 						a[i]=n-i;
-				break;		
+					break;		
 			
 		}
 		start=System.nanoTime();
 		Mergesort(a,0,n-1);
+		
 		stop=System.nanoTime();
         System.out.println("Time taken to sort " +a.length+ " elements = " +(stop-start));
     }
@@ -44,41 +45,29 @@ class mergesort
 			Merge(a,low,mid,high);
 		}
 	}
-	public static void Merge(int[] arr,int low,int mid,int high) 
+	public static void Merge(int[] arr,int l,int m,int r) 
 	{
-		int k,h=low,i=low,j=mid+1;
-		int[] b=new int[arr.length];
-		while(h<=mid && j<=high)
+		int n1 = m-l+1, n2 = r-m;
+		int L[] = new int[n1];
+		int R[] = new int[n2];
+		
+		for(int i=0;i<n1;i++)
+			L[i] = arr[l+i];
+		for(int j=0;j<n2;j++)
+			R[j] = arr[m+j+1];
+			
+		int i=0,j=0,k=l;
+		
+		while(i<n1 && j<n2)
 		{
-			if(arr[h]<=arr[j])
-			{
-				b[i]=arr[h];
-				h++;
-			}
+			if(L[i]<=R[j])
+				arr[k++] = L[i++];
 			else
-			{
-				b[i]=arr[j];
-				j++;
-			}
-			i++;
+				arr[k++] = R[j++];
 		}
-		if(h>mid)
-		{
-			for(k=j;k<=high;k++)
-			{
-				b[i]=arr[k];
-				i++;
-			}
-		}
-		else
-		{
-			for(k=h;k<=mid;k++)
-			{
-				b[i]=arr[k];
-				i++;
-			}		
-		}
-		for(k=low;k<=high;k++)
-			arr[k]=b[k];
+		while(i<n1)
+			arr[k++] = L[i++];
+		while(j<n2)
+			arr[k++] = R[j++];
 	}
 }
