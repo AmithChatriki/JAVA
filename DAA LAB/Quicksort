@@ -1,5 +1,5 @@
 import java.util.*;
-public class quicksort {
+public class Quicksort {
    public static void main(String[] args)
    {
 	   	Scanner sc = new Scanner(System.in);
@@ -27,10 +27,12 @@ public class quicksort {
 		long start,stop;
 		start = System.nanoTime();
 		quicksort(a,0,n-1);
+		for(int i:a)
+			System.out.println(i);
 		stop = System.nanoTime();
 		System.out.println("Time taken to sort "+a.length+" elements "+(stop-start));
    }
-  static void quicksort(int a[],int low,int high)
+   static void quicksort(int a[],int low,int high)
    {
 	   if(low<=high) 
 	   {
@@ -46,9 +48,9 @@ public class quicksort {
 	   int j = high;
 	   while(i<j)
 	   {
-		   while(a[i] <= pivot && i<=high-1)
+		   while(a[i] <= pivot && i<high)
 			   i++;
-		   while(a[j] > pivot && j>=low)
+		   while(a[j] >= pivot && j>low)
 			   j--;
 		   if(i<j)
 		   {
