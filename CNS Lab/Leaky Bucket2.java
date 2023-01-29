@@ -1,51 +1,69 @@
 import java.util.Scanner;
-import java.lang.*;
-public class lab7 {
-      public static void main(String[] args)
-      {
-          int i;
-          int a[]=new int[20];
-          int buck_rem=0,buck_cap=4,rate=3,sent,recv;
-          Scanner in = new Scanner(System.in);
-          System.out.println("Enter the number of packets");
-          int n = in.nextInt();
-          System.out.println("Enter the packets");
-          for(i=1;i<=n;i++)
-            a[i]= in.nextInt();
-          System.out.println("Clock \t packet size \t accept \t sent \t remaining");
-          for(i=1;i<=n;i++)
-          {
-            if(a[i]!=0)
-            {
-              if(buck_rem+a[i]>buck_cap)
-                recv=-1;
-              else
-              {
-                  recv=a[i];
-                  buck_rem+=a[i];
-              }
-            }
-            else
-                recv=0;
-            if(buck_rem!=0)
-            {
-                if(buck_rem<rate)
-                {
-                    sent=buck_rem;
-                    buck_rem=0;
-                }
-                else
-                {
-                    sent=rate;
-                    buck_rem=buck_rem-rate;
-                }
-            }
-            else
-                sent=0;
-            if(recv==-1)
-                System.out.println(+i+ "\t\t" +a[i]+ "\t dropped \t" +  sent +"\t" +buck_rem);
-            else
-                System.out.println(+i+ "\t\t" +a[i] +"\t\t" +recv +"\t" +sent + "\t" +buck_rem);
-          }
-      }
+public class leakybucket
+{
+	static int min(int x,int y)
+	{
+		if(x<y)
+		    return x; 
+		else
+			return y;
+	}		
+
+	public static void main(String[] args)
+	{
+		int drop=0,mini,nsec,cap,count=0,i,process;
+		int inp[]=new int[25];
+		Scanner se=new Scanner(System.in); 
+		System.out.println("Enter The Bucket Size\n");
+		cap=se.nextInt();
+		System.out.println("Enter The Operation Rate\n"); 
+		process =se.nextInt(); 
+		System.out.println("Enter The No. Of Seconds You Want To Stimulaten");
+		nsec=se.nextInt();
+		for(i=0;i<nsec;i++)
+		{
+			System.out.print("Enter The Size Of The Packet Entering At " +i+1+ "sec:"); 
+			inp[i] = se.nextInt();
+		}	
+
+		System.out.println("\nSecond | Packet Recieved | Packet Sent | Packet Left | Packet Dropped\n"); 
+		for(i=0;i<nsec;i++)
+		{
+
+			count+=inp[i];
+			if(count >cap)
+			{
+				drop=count-cap;
+				count=cap;
+		    }
+
+            System.out.print(i+1);
+			System.out.print("\t\t"+inp[1]);
+			mini=min(count,process);
+			System.out.print("\t\t"+mini); 
+			count=count-mini;
+			System.out.print("\t\t"+count);
+			System.out.print("\t\t"+drop);
+			drop=0;
+			System.out.println();
+		}
+
+		for(;count!=0;i++)
+		{
+			if(count>cap)
+			{
+				drop=count-cap;
+				count=cap;
+			}
+				
+			System.out.print(i+1);
+			System.out.print("\t\t0");
+			mini=min(count,process); 
+			System.out.print("\t\t"+mini);
+			count=count-mini; 
+			System.out.print("\t\t"+count);
+			System.out.print("\t\t"+drop); 
+			System.out.println();
+		}
+	}
 }
